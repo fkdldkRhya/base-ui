@@ -1,0 +1,19 @@
+[package]
+name = "base-ui"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+gl = "0.14"
+glutin = "0.28"
+rusttype = "0.9"
+log = "0.4"
+env_logger = "0.10"
+colored = "2.0"
+nalgebra-glm = "0.3"
+figlet-rs = "0.1.5"
+image = "0.24"
+reqwest = { version = "0.11", features = ["blocking"] }
+rand = "0.8"
+backtrace = "0.3"
+native-dialog = "0.6"
