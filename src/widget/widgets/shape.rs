@@ -231,8 +231,6 @@ impl Widget for Shape {
 }
 
 impl Shape {
-    const CIRCLE_SEGMENTS: usize = 32;
-
     fn draw_circle_with_opacity(
         &self,
         renderer: &mut Renderer,

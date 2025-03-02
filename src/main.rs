@@ -1,4 +1,8 @@
 // src/main.rs
+//
+// BASE-UI 데모 애플리케이션
+// 이 파일은 BASE-UI 라이브러리의 주요 기능을 보여주는 예제입니다.
+// 각 섹션은 라이브러리의 다른 기능을 시연합니다.
 
 use base_ui::widget::widgets::context_menu::{ ContextMenu, MenuItem };
 use base_ui::widget::widgets::{ Button, TextView, ImageView };
@@ -14,75 +18,61 @@ use base_ui::widget::Widget;
 use base_ui::widget::widgets::shape::{ Shape, ShapeType };
 
 fn main() {
+    // =========================================
+    // 1. 초기화 및 기본 설정
+    // =========================================
+
+    // 오류 처리 초기화 - 패닉 발생 시 스택 트레이스 출력
     initialize_error_handler();
 
-    let mut loop_count = 0;
-
-    let (mut window, event_loop) = Window::new("Text Rendering Demo", 1200, 1000);
-
-    // initialize()가 GLContext를 반환하도록 수정
+    // 윈도우 생성 (1200x1000 크기)
+    let (mut window, event_loop) = Window::new("BASE-UI Demo Application", 1200, 1000);
     let gl_context = base_ui::initialize(&window);
-
     info!("Window created: {}x{}", 1200, 1000);
     debug!("OpenGL context initialized");
 
+    // FiraCode 폰트 로드 및 렌더러 초기화
     let font_data = include_bytes!("assets/FiraCode-VariableFont_wght.ttf").to_vec();
     let mut renderer = Renderer::new(font_data);
 
-    // 배경색 설정 (예: 짙은 회색)
+    // 흰색 배경 설정
     renderer.set_background_color(1.0, 1.0, 1.0, 1.0);
 
     let mut screen_size = window.size();
 
+    // =========================================
+    // 2. UI 컴포넌트 생성 및 설정
+    // =========================================
+
+    // TextView 생성 및 스타일링
     let mut label = TextView::new("Hello, Widget!", &renderer);
     label.set_position(200.0, 200.0);
     label.set_font_size(50.0, &renderer);
-    label.set_background_color(Color::new(1.0, 0.3, 0.8, 0.3));
-    label.set_text_color(Color::new(0.5, 0.4, 1.0, 1.0));
-    label.set_hover_background_color(Color::new(0.5, 0.4, 1.0, 0.3));
-    label.set_hover_text_color(Color::new(1.0, 1.0, 1.0, 1.0));
-    label.set_on_click(|| {
-        println!("Label clicked!");
-    });
-    label.set_on_hover(|is_hovered| {
-        if is_hovered {
-            println!("Label hovered!");
-        } else {
-            println!("Label unhovered!");
-        }
-    });
+    label.set_background_color(Color::new(1.0, 0.3, 0.8, 0.3)); // 반투명 핑크
+    label.set_text_color(Color::new(0.5, 0.4, 1.0, 1.0)); // 보라색
+    label.set_hover_background_color(Color::new(0.5, 0.4, 1.0, 0.3)); // 반투명 보라
+    label.set_hover_text_color(Color::new(1.0, 1.0, 1.0, 1.0)); // 흰색
 
+    // Button 생성 및 스타일링
     let mut button = Button::new("Click Me!", &renderer);
     button.set_position(300.0, 300.0);
     button.set_size(200.0, 50.0);
     button.set_font_size(24.0, &renderer);
-    button.set_background_color(Color::new(0.2, 0.6, 1.0, 1.0));
-    button.set_text_color(Color::new(1.0, 1.0, 1.0, 1.0));
-    button.set_hover_text_color(Color::new(0.9, 0.9, 0.9, 0.0));
-    button.set_pressed_text_color(Color::new(0.7, 0.7, 0.7, 1.0));
-    button.set_border_color(Color::new(0.1, 0.3, 0.8, 1.0));
-    button.set_hover_border_color(Color::new(0.2, 0.4, 0.9, 1.0));
-    button.set_pressed_border_color(Color::new(0.05, 0.2, 0.6, 1.0));
+    button.set_background_color(Color::new(0.2, 0.6, 1.0, 1.0)); // 파란색
+    button.set_text_color(Color::new(1.0, 1.0, 1.0, 1.0)); // 흰색
+    button.set_hover_text_color(Color::new(0.9, 0.9, 0.9, 0.0)); // 연한 회색
+    button.set_pressed_text_color(Color::new(0.7, 0.7, 0.7, 1.0)); // 진한 회색
+    button.set_border_color(Color::new(0.1, 0.3, 0.8, 1.0)); // 진한 파란색
+    button.set_hover_border_color(Color::new(0.2, 0.4, 0.9, 1.0)); // 밝은 파란색
+    button.set_pressed_border_color(Color::new(0.05, 0.2, 0.6, 1.0)); // 어두운 파란색
     button.set_border_width(2.0);
 
-    // hover 이벤트 핸들러 설정
-    button.set_on_hover(|is_hovered| {
-        if is_hovered {
-            println!("Button hovered!");
-        } else {
-            println!("Button unhovered!");
-        }
-    });
-
-    // 클릭 이벤트 핸들러 설정
-    button.set_on_click(|| {
-        println!("Button clicked!");
-    });
-
+    // ImageView 생성 및 설정
     let mut image_view = ImageView::new();
     image_view.set_position(500.0, 200.0);
+    image_view.set_size(500.0, 400.0);
 
-    // 로컬 이미지 로드 (예시 경로)
+    // 이미지 URL에서 로드
     match
         image_view.load_from_url(
             "https://blog.kakaocdn.net/dn/bPZNUl/btqNH1ERpNt/ytnoU8PkkkFi1Kw81jx1Y0/img.png"
@@ -92,88 +82,95 @@ fn main() {
         Err(e) => info!("Failed to load image: {}", e),
     }
 
-    // 이미지 크기 조정 (선택사항)
-    image_view.set_size(500.0, 400.0);
+    // =========================================
+    // 3. 컨텍스트 메뉴 설정
+    // =========================================
 
-    // 클릭 이벤트 핸들러
-    image_view.set_on_click(|| {
-        println!("Image clicked!");
-    });
-
-    // hover 이벤트 핸들러
-    image_view.set_on_hover(|is_hovered| {
-        if is_hovered {
-            println!("Image hovered!");
-        } else {
-            println!("Image unhovered!");
-        }
-    });
-
-    // 컨텍스트 메뉴 생성
     let mut context_menu = ContextMenu::new();
 
-    // 메뉴 아이템 추가
+    // 메뉴 아이템 추가 및 이벤트 핸들러 설정
     let mut item1 = MenuItem::new("Open");
-    item1.set_on_click(|| {
-        println!("Open clicked!");
-    });
+    item1.set_on_click(|| println!("Open clicked!"));
     context_menu.add_item(item1);
 
     let mut item2 = MenuItem::new("Save");
-    item2.set_on_click(|| {
-        println!("Save clicked!");
-    });
+    item2.set_on_click(|| println!("Save clicked!"));
     context_menu.add_item(item2);
 
-    // 사각형 생성
+    // =========================================
+    // 4. 기본 도형 생성
+    // =========================================
+
+    // 빨간색 사각형
     let mut rect = Shape::new(ShapeType::Rectangle);
     rect.set_position(100.0, 100.0);
     rect.set_size(200.0, 100.0);
     rect.set_fill_color(Color::new(1.0, 0.0, 0.0, 1.0));
     rect.set_border_color(Color::new(0.0, 0.0, 0.0, 1.0));
     rect.set_border_width(2.0);
-    rect.set_on_click(|| {
-        println!("Rectangle clicked!");
-    });
-    rect.set_on_hover(|is_hovered| {
-        if is_hovered {
-            println!("Rectangle hovered!");
-        } else {
-            println!("Rectangle unhovered!");
-        }
-    });
 
-    // 원 생성
+    // 초록색 원
     let mut circle = Shape::new(ShapeType::Circle);
     circle.set_position(400.0, 100.0);
     circle.set_size(100.0, 100.0);
     circle.set_fill_color(Color::new(0.0, 1.0, 0.0, 1.0));
-    circle.set_on_click(|| {
-        println!("Circle clicked!");
-    });
-    circle.set_on_hover(|is_hovered| {
-        if is_hovered {
-            println!("Circle hovered!");
-        } else {
-            println!("Circle unhovered!");
-        }
-    });
 
-    // 삼각형 생성
+    // 파란색 삼각형
     let mut triangle = Shape::new(ShapeType::Triangle);
     triangle.set_position(600.0, 100.0);
     triangle.set_size(100.0, 100.0);
     triangle.set_fill_color(Color::new(0.0, 0.0, 1.0, 1.0));
+
+    // =========================================
+    // 5. 이벤트 핸들러 설정
+    // =========================================
+
+    // 각 위젯에 개별적으로 이벤트 핸들러 설정
+    label.set_on_click(|| {
+        println!("Label clicked!");
+    });
+    label.set_on_hover(|is_hovered| {
+        println!("Label {}!", if is_hovered { "hovered" } else { "unhovered" });
+    });
+
+    button.set_on_click(|| {
+        println!("Button clicked!");
+    });
+    button.set_on_hover(|is_hovered| {
+        println!("Button {}!", if is_hovered { "hovered" } else { "unhovered" });
+    });
+
+    image_view.set_on_click(|| {
+        println!("ImageView clicked!");
+    });
+    image_view.set_on_hover(|is_hovered| {
+        println!("ImageView {}!", if is_hovered { "hovered" } else { "unhovered" });
+    });
+
+    rect.set_on_click(|| {
+        println!("Rectangle clicked!");
+    });
+    rect.set_on_hover(|is_hovered| {
+        println!("Rectangle {}!", if is_hovered { "hovered" } else { "unhovered" });
+    });
+
+    circle.set_on_click(|| {
+        println!("Circle clicked!");
+    });
+    circle.set_on_hover(|is_hovered| {
+        println!("Circle {}!", if is_hovered { "hovered" } else { "unhovered" });
+    });
+
     triangle.set_on_click(|| {
         println!("Triangle clicked!");
     });
     triangle.set_on_hover(|is_hovered| {
-        if is_hovered {
-            println!("Triangle hovered!");
-        } else {
-            println!("Triangle unhovered!");
-        }
+        println!("Triangle {}!", if is_hovered { "hovered" } else { "unhovered" });
     });
+
+    // =========================================
+    // 6. 애니메이션 및 이벤트 루프
+    // =========================================
 
     let mut last_frame = Instant::now();
 
@@ -319,11 +316,6 @@ fn main() {
                 //     image_view.set_size(random_size as f32, 200.0);
                 // }
 
-                // // 1000 번의 1번꼴로 예외 발생
-                // if loop_count % 1000 == 0 {
-                //     panic!("Test panic!");
-                // }
-
                 gl_context.clear(0.2, 0.3, 0.3, 1.0);
 
                 // 기본 렌더링
@@ -347,7 +339,6 @@ fn main() {
                 triangle.draw(&mut renderer, screen_size.0, screen_size.1);
 
                 window.swap_buffers();
-                loop_count += 1;
             }
             _ => (),
         }
