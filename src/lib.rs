@@ -5,11 +5,11 @@ pub mod animation;
 pub mod widget;
 pub mod figlet;
 pub mod style;
-use core::{ GLContext, Window };
+use crate::core::{ GLContext, Window };
 
 // 외부에서 직접 사용하기 쉽도록 re-export합니다.
-pub use graphics::renderer::Renderer;
-pub use text::font::FontRenderer;
+pub use crate::graphics::renderer::Renderer;
+pub use crate::text::font::FontRenderer;
 pub use text::text_renderer::TextRenderer;
 pub use animation::Animation;
 pub use widget::Widget;
