@@ -10,12 +10,12 @@ use crate::core::{ GLContext, Window };
 // 외부에서 직접 사용하기 쉽도록 re-export합니다.
 pub use crate::graphics::renderer::Renderer;
 pub use crate::text::font::FontRenderer;
-pub use text::text_renderer::TextRenderer;
-pub use animation::Animation;
-pub use widget::Widget;
-pub use widget::widgets::text_view::TextView;
-pub use figlet::figlet_3d::FIGLET_3D_FONT;
-pub use core::error_handler::initialize_error_handler;
+pub use crate::text::text_renderer::TextRenderer;
+pub use crate::animation::Animation;
+pub use crate::widget::Widget;
+pub use crate::widget::widgets::text_view::TextView;
+pub use crate::figlet::figlet_3d::FIGLET_3D_FONT;
+pub use crate::core::error_handler::initialize_error_handler;
 
 use log::info;
 use figlet_rs::FIGfont;
