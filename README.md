@@ -33,7 +33,7 @@ Cargo.toml에 다음 의존성을 추가하세요:
 
 ```toml
 [dependencies]
-base-ui = "0.1.0"
+base-ui = "1.0.1"
 ```
 
 또는 이 저장소를 직접 클론하여 사용할 수 있습니다:
@@ -83,6 +83,7 @@ fn main() {
     debug!("OpenGL context initialized");
 
     // FiraCode 폰트 로드 및 렌더러 초기화
+    // Path: src/assets/FiraCode-VariableFont_wght.ttf
     let font_data = include_bytes!("assets/FiraCode-VariableFont_wght.ttf").to_vec();
     let mut renderer = Renderer::new(font_data);
 
