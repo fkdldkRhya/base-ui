@@ -6,7 +6,6 @@ description = "base-ui crate"
 keywords = ["base-ui", "ui", "crate"]
 edition = "2021" 
 license = "MIT" #라이센스
-include = ["src/*.rs", "Cargo.toml"] #업로드 대상
 exclude = []
 readme = "README.md"
 repository = "https://github.com/fkdldkRhya/base-ui" #레포지토리
