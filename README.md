@@ -33,7 +33,7 @@ Cargo.toml에 다음 의존성을 추가하세요:
 
 ```toml
 [dependencies]
-base-ui = "1.0.1"
+base-ui = "1.0.2"
 glutin = "0.28"
 log = "0.4"
 ```

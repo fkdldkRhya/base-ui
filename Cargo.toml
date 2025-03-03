@@ -1,6 +1,6 @@
 [package]
 name = "base-ui"
-version = "1.0.1"
+version = "1.0.2"
 authors = ["fkdldkrhya <sihun.choi@rhya-network.com>"]
 description = "base-ui crate"
 keywords = ["base-ui", "ui", "crate"]

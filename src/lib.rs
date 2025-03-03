@@ -22,7 +22,7 @@ use figlet_rs::FIGfont;
 use gl;
 
 pub const ENGINE_NAME: &str = "BASE-UI";
-pub const ENGINE_VERSION: &str = "1.0.1";
+pub const ENGINE_VERSION: &str = "1.0.2";
 pub const ENGINE_AUTHOR: &str = "CHOI SIHUN";
 pub const ENGINE_COPYRIGHT: &str =
     "Copyright © 2025 BASE-UI GUI Engine by CHOI SIHUN, All rights reserved.";
@@ -64,5 +64,5 @@ pub fn initialize(window: &Window) -> GLContext {
 
 #[no_mangle]
 pub extern "C" fn engine_version() -> *const u8 {
-    b"Base UI v1.0.1\0".as_ptr()
+    b"Base UI v1.0.2\0".as_ptr()
 }
