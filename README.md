@@ -34,6 +34,8 @@ Cargo.toml에 다음 의존성을 추가하세요:
 ```toml
 [dependencies]
 base-ui = "1.0.1"
+glutin = "0.28"
+log = "0.4"
 ```
 
 또는 이 저장소를 직접 클론하여 사용할 수 있습니다:
